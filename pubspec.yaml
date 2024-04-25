@@ -1,0 +1,43 @@
+name: washgenie_app
+description: "A new Flutter project."
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.4 <4.0.0'
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  google_fonts: ^6.2.1
+  animated_splash_screen:
+  flutter_svg: ^1.1.0
+  shared_preferences: ^2.2.3
+  provider: ^6.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.0
+
+
+
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/logo.svg
+    - assets/bg-prehome.png
+    - assets/pre-home_img.png
+    - assets/Logo2.jpg
+    - assets/Logo1.png
+    - assets/default_user_image.png
+    - assets/header_background.png
+    - assets/booking_banner.png
+
