@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:washgenie_app/screens/models/user_data.dart';
 import 'screens/splash.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<UserData>(
+          create: (context) => UserData(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

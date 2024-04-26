@@ -6,18 +6,18 @@ import 'package:provider/provider.dart';
 import 'prehome_screen.dart';
 import 'models/user_data.dart'; // Adjust the import path as per your project structure
 
-void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider<UserData>(
-          create: (context) => UserData(),
-        ),
-      ],
-      child: const MyApp(),
-    ),
-  );
-}
+// void main() {
+//   runApp(
+//     MultiProvider(
+//       providers: [
+//         ChangeNotifierProvider<UserData>(
+//           create: (context) => UserData(),
+//         ),
+//       ],
+//       child: const MyApp(),
+//     ),
+//   );
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

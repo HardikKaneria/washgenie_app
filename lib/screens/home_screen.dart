@@ -1,5 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'dart:ui';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -28,6 +30,9 @@ class MyCustomScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+    if (kDebugMode) {
+      print("Screen width: $screenWidth, Screen height: $screenHeight");
+    } // Debug print
     return Scaffold(
       body: Container(
         height: screenHeight,
@@ -67,24 +72,13 @@ class HomeBodyHeader extends StatelessWidget {
 
     return Stack(
       children: [
-        GestureDetector(
-          onTap: () {
-            MaterialPageRoute(
-                builder: (context) => const AccountScreen(
-                      userName: 'Hardik Kaneria',
-                      userPhone: '9825871942',
-                      userBalance: 1500,
-                    ));
-          },
-          child: Container(
-            width: screenWidth,
-            height:
-                screenHeight * 0.35, // Height of the container adjusted here
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/header_background.png"),
-                fit: BoxFit.cover,
-              ),
+        Container(
+          width: screenWidth,
+          height: screenHeight * 0.35, // Height of the container adjusted here
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/header_background.png"),
+              fit: BoxFit.cover,
             ),
           ),
         ),
@@ -115,17 +109,65 @@ class HomeBodyHeader extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                        width: 53,
-                        height: 53,
-                        decoration: const ShapeDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("assets/default_user_image.png"),
-                            fit: BoxFit.fill,
-                          ),
-                          shape: CircleBorder(
-                            side:
-                                BorderSide(width: 2, color: Color(0xFF77FFC3)),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder:
+                                  (context, animation, secondaryAnimation) =>
+                                      const AccountScreen(
+                                userName: 'Hardik Kaneria',
+                                userPhone: '9825871942',
+                                userBalance: 1500,
+                              ),
+                              transitionsBuilder: (context, animation,
+                                  secondaryAnimation, child) {
+                                var begin = const Offset(-1.0, 0.0);
+                                var end = Offset.zero;
+                                var curve = Curves.easeInOut;
+
+                                var tween = Tween(begin: begin, end: end)
+                                    .chain(CurveTween(curve: curve));
+                                var offsetAnimation = animation.drive(tween);
+
+                                return Stack(
+                                  children: [
+                                    Positioned.fill(
+                                      child: BackdropFilter(
+                                        filter: ImageFilter.blur(
+                                          sigmaX: 50 * secondaryAnimation.value,
+                                          sigmaY: 50 * secondaryAnimation.value,
+                                        ),
+                                        child: Container(
+                                            color: Colors.black.withOpacity(
+                                                0.5 *
+                                                    secondaryAnimation.value)),
+                                      ),
+                                    ),
+                                    SlideTransition(
+                                      position: offsetAnimation,
+                                      child: child,
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: 53,
+                          height: 53,
+                          decoration: const ShapeDecoration(
+                            image: DecorationImage(
+                              image:
+                                  AssetImage("assets/default_user_image.png"),
+                              fit: BoxFit.fill,
+                            ),
+                            shape: CircleBorder(
+                              side: BorderSide(
+                                  width: 2, color: Color(0xFF77FFC3)),
+                            ),
                           ),
                         ),
                       ),
@@ -355,7 +397,6 @@ class _HomeBodyState extends State<HomeBody> {
                     ),
                   ),
                 ),
-
                 Container(
                   width: screenSize.width,
                   padding:
@@ -567,11 +608,9 @@ class _HomeBodyState extends State<HomeBody> {
 }
 
 class AccountScreen extends StatelessWidget {
-  // These should be set with the actual values, possibly passed through a constructor.
   final String userName;
   final String userPhone;
-  final double
-      userBalance; // The data type should be double as you're assigning a numerical value.
+  final double userBalance;
 
   const AccountScreen({
     super.key,
@@ -583,59 +622,130 @@ class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+      // appBar: AppBar(
+      //   leading: IconButton(
+      //     icon: const Icon(Icons.arrow_back),
+      //     onPressed: () => Navigator.pop(context),
+      //   ),
+      //   title: const Text('Account'),
+      //   centerTitle: true,
+      // ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color(0xFF203066), Color(0xFFD1D8ED)],
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Account',
+                    style: TextStyle(
+                      color: Color(0xFF15214B),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Rubik',
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 32),
+                  Row(
+                    children: [
+                      const CircleAvatar(
+                        radius: 37,
+                        backgroundImage:
+                            NetworkImage("https://via.placeholder.com/74x74"),
+                        backgroundColor: Color(0xFF203066),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              userName,
+                              style: const TextStyle(
+                                color: Color(0xFF203066),
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Rubik',
+                              ),
+                            ),
+                            Text(
+                              userPhone,
+                              style: const TextStyle(
+                                color: Color(0xFF1C3AA4),
+                                fontSize: 16,
+                                fontFamily: 'Rubik',
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              '₹${userBalance.toStringAsFixed(2)}',
+                              style: const TextStyle(
+                                color: Color(0xFF27684B),
+                                fontSize: 14,
+                                fontFamily: 'Rubik',
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            const MenuTile(icon: Icons.location_on, title: 'Address'),
+            const MenuTile(icon: Icons.directions_car, title: 'Vehicles'),
+            const MenuTile(icon: Icons.book, title: 'Bookings'),
+            const MenuTile(
+                icon: Icons.account_balance_wallet, title: 'My Wallet'),
+            const MenuTile(icon: Icons.person, title: 'Profile'),
+            const MenuTile(icon: Icons.exit_to_app, title: 'Log out'),
+          ],
         ),
-        title: const Text('Account'),
-        centerTitle: true,
       ),
-      body: ListView(
-        children: <Widget>[
-          UserAccountsDrawerHeader(
-            accountName: Text(userName),
-            accountEmail: Text(userPhone),
-            currentAccountPicture: const CircleAvatar(
-              backgroundImage: AssetImage(
-                  'assets/image.png'), // Make sure the image is in the assets folder.
-            ),
-            otherAccountsPictures: <Widget>[
-              Text(
-                  '₹${userBalance.toStringAsFixed(2)}'), // Formatted for currency display
-            ],
-            decoration: const BoxDecoration(
-              color: Colors.blue,
-            ),
+    );
+  }
+}
+
+class MenuTile extends StatelessWidget {
+  final IconData icon;
+  final String title;
+
+  const MenuTile({super.key, required this.icon, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 50, // Set the height of the menu tile
+      child: ListTile(
+        leading: Icon(icon, color: const Color(0xFF2E75E8)),
+        title: Text(
+          title,
+          style: const TextStyle(
+            color: Color(0xFF231F20),
+            fontSize: 18,
+            fontFamily: 'Rubik',
+            fontWeight: FontWeight.w600,
           ),
-          const ListTile(
-            leading: Icon(Icons.location_on),
-            title: Text('Address'),
-          ),
-          const ListTile(
-            leading: Icon(Icons.directions_car),
-            title: Text('Vehicles'),
-          ),
-          const ListTile(
-            leading: Icon(Icons.book),
-            title: Text('Bookings'),
-          ),
-          const ListTile(
-            leading: Icon(Icons.account_balance_wallet),
-            title: Text('My Wallet'),
-          ),
-          const ListTile(
-            leading: Icon(Icons.person),
-            title: Text('Profile'),
-          ),
-          const Divider(), // This is the divider between Profile and Logout.
-          const ListTile(
-            leading: Icon(Icons.exit_to_app),
-            title: Text('Log out'),
-          ),
-        ],
+        ),
+        onTap: () {
+          if (kDebugMode) {
+            print('$title tile tapped');
+          }
+        },
       ),
     );
   }
