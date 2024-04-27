@@ -40,4 +40,8 @@ flutter:
     - assets/default_user_image.png
     - assets/header_background.png
     - assets/booking_banner.png
+    - assets/home_icon.png
+    - assets/booking_icon.png
+    - assets/wallet_icon.png
+    - assets/support_icon.png
 

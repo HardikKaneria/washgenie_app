@@ -1,23 +1,25 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import 'dart:async';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'prehome_screen.dart';
+import 'prehome_screen.dart'; // Make sure this import path is correct
 import 'models/user_data.dart'; // Adjust the import path as per your project structure
 
-// void main() {
-//   runApp(
-//     MultiProvider(
-//       providers: [
-//         ChangeNotifierProvider<UserData>(
-//           create: (context) => UserData(),
-//         ),
-//       ],
-//       child: const MyApp(),
-//     ),
-//   );
-// }
+void main() {
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<UserData>(
+          create: (context) => UserData(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -45,8 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Navigate to HomeScreen after 5 seconds
-    Future.delayed(Duration.zero, () {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<UserData>(context, listen: false).loadUserData().then((_) {
         Timer(const Duration(seconds: 2), () {
           Navigator.of(context).pushReplacement(
@@ -90,7 +91,6 @@ class Property1Variant4 extends StatelessWidget {
                 child: ClipRect(
                   child: BackdropFilter(
                     filter: ui.ImageFilter.blur(sigmaX: 25.0, sigmaY: 25.0),
-                    // Ensure the blur effect is contained within the child
                     child: Center(
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.6533,
@@ -108,7 +108,7 @@ class Property1Variant4 extends StatelessWidget {
                 child: BackdropFilter(
                   filter: ui.ImageFilter.blur(sigmaX: 25.0, sigmaY: 25.0),
                   child: SvgPicture.asset(
-                    "assets/logo.svg", // Update the path if your file structure is different
+                    "assets/logo.svg",
                     fit: BoxFit.cover,
                   ),
                 ),

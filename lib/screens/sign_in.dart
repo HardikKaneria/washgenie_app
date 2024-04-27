@@ -39,6 +39,7 @@ class LogIn extends StatefulWidget {
   const LogIn({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _LogInState createState() => _LogInState();
 }
 
@@ -182,8 +183,7 @@ class _LogInState extends State<LogIn> {
                   onPressed: () async {
                     final userPhone = _userPhoneController.text;
                     if (kDebugMode) {
-                      print(
-                        'User phone number: $userPhone');
+                      print('User phone number: $userPhone');
                     } // Debug print to check user phone number
 
                     // Attempt to store the phone number
@@ -355,7 +355,7 @@ class _MainContainerState extends State<MainContainer> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    const HomeBodyHeader()), // Ensure HomeScreen is a valid widget
+                                    const MyCustomScreen()), // Ensure HomeScreen is a valid widget
                           );
                         }
                       } else {
