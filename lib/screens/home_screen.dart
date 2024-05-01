@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:washgenie_app/screens/navbar.dart';
 import 'package:washgenie_app/screens/prehome_screen.dart';
+import 'package:washgenie_app/screens/profile_screen.dart';
 // import 'models/user_data.dart';
 
 void main() {
@@ -870,8 +871,8 @@ void handleMenuTap(BuildContext context, String menuItem) {
           MaterialPageRoute(builder: (context) => const WalletScreen()));
       break;
     case 'Profile':
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const ProfileScreen()));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ProfileScreen()));
       break;
     case 'Log out':
       Navigator.push(
@@ -964,18 +965,6 @@ class WalletScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('My Wallet')),
       body: const Center(child: Text('Wallet Screen')),
-    );
-  }
-}
-
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Profile')),
-      body: const Center(child: Text('Profile Screen')),
     );
   }
 }

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:washgenie_app/screens/edit_profile.dart';
+import 'package:washgenie_app/screens/home_screen.dart';
 // ignore: unused_import
 import 'package:washgenie_app/screens/splash.dart';
-import 'home_screen.dart';
 // ignore: unused_import
 import 'models/user_data.dart';
 
@@ -246,10 +247,19 @@ class _MainContainerState extends State<MainContainer> {
   final TextEditingController _otpController = TextEditingController();
   String _otp = '';
   bool _isOTPValid = false;
-  Future<bool> validateOTP(String otp) async {
-    // Assume this method checks the OTP validity and returns true if valid, otherwise false.
-    // This could involve a network request or a local check depending on your implementation.
-    return otp == "123456"; // Example condition
+  bool newUser = true; // Initialize newUser to true by default
+
+  @override
+  void initState() {
+    super.initState();
+    _loadNewUserStatus();
+  }
+
+  Future<void> _loadNewUserStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      newUser = prefs.getBool('newUser') ?? true;
+    });
   }
 
   @override
@@ -350,13 +360,22 @@ class _MainContainerState extends State<MainContainer> {
                           _isOTPValid = true; // Update OTP validation state
                         });
                         if (_isOTPValid) {
-                          // Navigate to the HomeScreen if the OTP is valid
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const MyCustomScreen()), // Ensure HomeScreen is a valid widget
-                          );
+                          // Navigate to different screens based on the newUser variable
+                          if (newUser) {
+                            // Navigate to MyCustomScreen if newUser is true
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => EditProfileScreen()),
+                            );
+                          } else {
+                            // Navigate to EditProfileScreen if newUser is false
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MyCustomScreen()),
+                            );
+                          }
                         }
                       } else {
                         // Optionally handle incorrect OTP entry
