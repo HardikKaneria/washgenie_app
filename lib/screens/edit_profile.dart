@@ -174,16 +174,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         icons: [
           NavBarIcon(
               builder: (context) => Image.asset('assets/home_icon.png'),
-              label: 'Home'),
+              label: 'Home', onTap: () {  }),
           NavBarIcon(
               builder: (context) => Image.asset('assets/booking_icon.png'),
-              label: 'Booking'),
+              label: 'Booking', onTap: () {  }),
           NavBarIcon(
               builder: (context) => Image.asset('assets/wallet_icon.png'),
-              label: 'Wallet'),
+              label: 'Wallet', onTap: () {  }),
           NavBarIcon(
               builder: (context) => Image.asset('assets/support_icon.png'),
-              label: 'Support'),
+              label: 'Support', onTap: () {  }),
         ],
         selectedIndex: _selectedIndex,
         onItemSelected: _onItemTapped,

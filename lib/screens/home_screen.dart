@@ -90,16 +90,34 @@ class _MyCustomScreenState extends State<MyCustomScreen> {
         icons: [
           NavBarIcon(
               builder: (context) => Image.asset('assets/home_icon.png'),
-              label: 'Home'),
+              label: 'Home',
+              onTap: () {                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const WalletScreen()),
+                );}),
           NavBarIcon(
               builder: (context) => Image.asset('assets/booking_icon.png'),
-              label: 'Booking'),
+              label: 'Booking',
+              onTap: () {                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const WalletScreen()),
+                );}),
           NavBarIcon(
               builder: (context) => Image.asset('assets/wallet_icon.png'),
-              label: 'Wallet'),
+              label: 'Wallet',
+              onTap: () {                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const WalletScreen()),
+                );}),
           NavBarIcon(
               builder: (context) => Image.asset('assets/support_icon.png'),
-              label: 'Support'),
+              label: 'Support',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const WalletScreen()),
+                );
+              }),
         ],
         selectedIndex: _selectedIndex,
         onItemSelected: _onItemTapped,

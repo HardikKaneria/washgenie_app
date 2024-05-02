@@ -7,7 +7,7 @@ class NavBarIcon {
   final NavIconBuilder builder;
   final String label;
 
-  NavBarIcon({required this.builder, required this.label});
+  NavBarIcon({required this.builder, required this.label, required Null Function() onTap});
 }
 
 class NavBar extends StatelessWidget {
@@ -15,13 +15,14 @@ class NavBar extends StatelessWidget {
   final List<NavBarIcon> icons;
   final int selectedIndex;
   final Function(int) onItemSelected;
+  final VoidCallback? onTap;
 
   const NavBar({
     super.key,
     required this.backgroundColor,
     required this.icons,
     required this.selectedIndex,
-    required this.onItemSelected,
+    required this.onItemSelected, this.onTap,
   });
 
   @override

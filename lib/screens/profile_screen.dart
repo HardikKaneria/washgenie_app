@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:washgenie_app/screens/home_screen.dart';
 import 'package:washgenie_app/screens/models/user_data.dart'; // Adjust the import path to your UserData model
 import 'package:washgenie_app/screens/navbar.dart';
 import 'edit_profile.dart';
@@ -15,6 +16,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreen extends State<ProfileScreen> {
   int _selectedIndex = 0; // Initialize selected index
   String? userName;
+
   @override
   void initState() {
     super.initState();
@@ -26,7 +28,7 @@ class _ProfileScreen extends State<ProfileScreen> {
     setState(() {
       _selectedIndex = index;
     });
-    // Here, you would also handle navigation or page updating
+    // Optionally trigger navigation or other actions here if needed
   }
 
   @override
@@ -109,17 +111,45 @@ class _ProfileScreen extends State<ProfileScreen> {
         backgroundColor: const Color(0xFF203066),
         icons: [
           NavBarIcon(
-              builder: (context) => Image.asset('assets/home_icon.png'),
-              label: 'Home'),
+            builder: (context) => Image.asset('assets/home_icon.png'),
+            label: 'Home',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MyCustomScreen()),
+              );
+            },
+          ),
           NavBarIcon(
-              builder: (context) => Image.asset('assets/booking_icon.png'),
-              label: 'Booking'),
+            builder: (context) => Image.asset('assets/booking_icon.png'),
+            label: 'Booking',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BookingsScreen()),
+              );
+            },
+          ),
           NavBarIcon(
-              builder: (context) => Image.asset('assets/wallet_icon.png'),
-              label: 'Wallet'),
+            builder: (context) => Image.asset('assets/wallet_icon.png'),
+            label: 'Wallet',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const WalletScreen()),
+              );
+            },
+          ),
           NavBarIcon(
-              builder: (context) => Image.asset('assets/support_icon.png'),
-              label: 'Support'),
+            builder: (context) => Image.asset('assets/support_icon.png'),
+            label: 'Support',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const WalletScreen()),
+              );
+            },
+          ),
         ],
         selectedIndex: _selectedIndex,
         onItemSelected: _onItemTapped,
